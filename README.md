@@ -1,5 +1,5 @@
 # Flexible age-specific spatio-temporal Bayesian P-splines models
-This repository contains the R code to fit in INLA the age-specific spatio-temporal Bayesian P-splines models described in _"Flexible Bayesian P-splines for smoothing age-specific spatio-temporal mortality patterns"_ [(Goicoa et al., 2019)](https://10.1177/0962280217726802).
+This repository contains the R code to fit in INLA the age-specific spatio-temporal Bayesian P-splines models described in _"Flexible Bayesian P-splines for smoothing age-specific spatio-temporal mortality patterns"_ [(Goicoa et al., 2019)](https://doi.org/10.1177/0962280217726802).
 
 
 ## Table of contents
