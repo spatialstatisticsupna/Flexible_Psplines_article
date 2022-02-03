@@ -12,7 +12,7 @@ This repository contains the R code to fit in INLA the age-specific spatio-tempo
 # Data
 Female breast cancer mortality data (ICD-10 code 50) in Spanish provinces during the period 1985-2010 by age groups.
 
-- [**BreastCancer_ESP.Rdata**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/BreastCancer_ESP.txt)
+- [**BreastCancer_ESP.txt**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/BreastCancer_ESP.txt)
   
   This .txt file contains a data set with the following variables:
 	- **_Age.group_**: numeric vector of age-group identifiers.
@@ -22,9 +22,9 @@ Female breast cancer mortality data (ICD-10 code 50) in Spanish provinces during
 	- **_Obs_**: observed number of deaths.
 	- **_Pop_**: Population at risk.
 
-- [**_Carto_ESP_**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/Carto_ESP.Rdata) `SpatialPolygonsDataFrame` object containing the spatial polygons of the Spanish provinces.
+- [**Carto_ESP.Rdata**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/Carto_ESP.Rdata) `SpatialPolygonsDataFrame` object containing the spatial polygons of the Spanish provinces.
   
-- [**Esp_prov_nb.graph**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/Esp_prov_nb.graph)
+- [**Esp_prov_nb.graph**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/Esp_prov_nb.inla)
   
   An inla.graph object with the spatial neighbourhood structure of the 50 provinces of Spain.
 
