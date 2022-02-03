@@ -46,4 +46,4 @@ This work has been supported by the Spanish Ministry of Economy and Competitiven
 
 
 # References
-[Goicoa, T., Adin, A., Etxeberria, J., Militino, A.F., and Ugarte, M.D. (2019). Flexible Bayesian P-splines for smoothing age-specific spatio-temporal mortality patterns. _Statistical Methods in Medical Research_, __28(2)__, 384-403.](https://doi.org/https://10.1177/0962280217726802)
+[Goicoa, T., Adin, A., Etxeberria, J., Militino, A.F., and Ugarte, M.D. (2019). Flexible Bayesian P-splines for smoothing age-specific spatio-temporal mortality patterns. _Statistical Methods in Medical Research_, __28(2)__, 384-403.](https://doi.org/10.1177/0962280217726802)
