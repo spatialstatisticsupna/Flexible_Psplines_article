@@ -36,6 +36,10 @@ R code to fit with INLA (https://www.r-inla.org/) the age-specific spatio-tempor
 
   Main script including the required functions to fit in INLA the different age-specific spatio-temporal Bayesian P-splines described in the paper.
   
+- [**Figures_and_Tables.R**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/R/Figures_and_Tables.R)
+  
+  This R script contains the necessary functions to reproduce the figures and tables of the present paper. The final model fitted with INLA (Model9-SI with posterior patterns) can be downloaded from https://emi-sstcdapp.unavarra.es/Flexible_Psplines_article/Model9_SI.Rdata.
+
 
 # Acknowledgements
 This work has been supported by the Spanish Ministry of Economy and Competitiveness (project MTM2014-51992-R), and by the Health Department of the Navarre Government (Project 113, Res.2186/2014).
