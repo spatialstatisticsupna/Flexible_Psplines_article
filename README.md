@@ -22,7 +22,7 @@ Simulated female breast cancer mortality data (ICD-10 code 50) in Spanish provin
 	- **_Obs_**: observed number of deaths.
 	- **_Pop_**: Population at risk.
 	
-	Note that the observed number of deaths have been slightly altered in order to preserve data privacy. 
+	Note that the observed number of deaths has been modified to preserve data confidentiality.
 
 - [**Carto_ESP.Rdata**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/Carto_ESP.Rdata): `SpatialPolygonsDataFrame` object containing the spatial polygons of the Spanish provinces.
   
@@ -34,7 +34,7 @@ R code to fit with INLA (https://www.r-inla.org/) the age-specific spatio-tempor
 
 - [**Psplines_INLA.R**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/R/Psplines_INLA.R)
 
-  Main script including the required functions to fit in INLA the different age-specific spatio-temporal Bayesian P-splines described in the paper. Note that the obtained results will differ from those shown in the original paper, since simulated data are being used here to preserve data privacy.
+  Main script including the required functions to fit in INLA the different age-specific spatio-temporal Bayesian P-splines described in the paper. Note that the obtained results will differ from those shown in the original paper, since simulated data are being used here to preserve data confidentiality.
   
 - [**Figures_and_Tables.R**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/R/Figures_and_Tables.R)
   
