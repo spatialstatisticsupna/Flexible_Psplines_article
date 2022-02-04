@@ -24,11 +24,9 @@ Simulated female breast cancer mortality data (ICD-10 code 50) in Spanish provin
 	
 	Note that the observed number of deaths have been slightly altered in order to preserve data privacy. 
 
-- [**Carto_ESP.Rdata**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/Carto_ESP.Rdata) `SpatialPolygonsDataFrame` object containing the spatial polygons of the Spanish provinces.
+- [**Carto_ESP.Rdata**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/Carto_ESP.Rdata): `SpatialPolygonsDataFrame` object containing the spatial polygons of the Spanish provinces.
   
-- [**Esp_prov_nb.graph**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/Esp_prov_nb.inla)
-  
-  An inla.graph object with the spatial neighbourhood structure of the 50 provinces of Spain.
+- [**Esp_prov_nb.graph**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/Esp_prov_nb.inla): An inla.graph object with the spatial neighbourhood structure of the 50 provinces of Spain.
 
 
 # R code
@@ -36,11 +34,11 @@ R code to fit with INLA (https://www.r-inla.org/) the age-specific spatio-tempor
 
 - [**Psplines_INLA.R**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/R/Psplines_INLA.R)
 
-  Main script including the required functions to fit in INLA the different age-specific spatio-temporal Bayesian P-splines described in the paper.
+  Main script including the required functions to fit in INLA the different age-specific spatio-temporal Bayesian P-splines described in the paper. Note that the obtained results will differ from those shown in the original paper, since simulated data are being used here to preserve data privacy.
   
 - [**Figures_and_Tables.R**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/R/Figures_and_Tables.R)
   
-  This R script contains the necessary functions to reproduce the figures and tables of the present paper. The final model fitted with INLA (Model9-SI with posterior patterns) can be downloaded from https://emi-sstcdapp.unavarra.es/Flexible_Psplines_article/Model9_SI.Rdata.
+  This R script contains the necessary functions to reproduce some of the figures and tables shown in Goicoa et al. (2019). The final model fitted with INLA (Model9-SI with posterior patterns) can be downloaded from https://emi-sstcdapp.unavarra.es/Flexible_Psplines_article/Model9_SI.Rdata.
 
 
 # Acknowledgements
