@@ -32,7 +32,7 @@ Female breast cancer mortality data (ICD-10 code 50) in Spanish provinces during
 # R code
 R code to fit with INLA (https://www.r-inla.org/) the age-specific spatio-temporal Bayesian P-splines models described in Goicoa et al. (2019). All the R files are written by the authors of the paper.
 
-- [**Psplines_INLA.R**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/R/CARmodels_INLA.R)
+- [**Psplines_INLA.R**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/R/Psplines_INLA.R)
 
   Main script including the required functions to fit in INLA the different age-specific spatio-temporal Bayesian P-splines described in the paper.
   
