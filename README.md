@@ -10,7 +10,7 @@ This repository contains the R code to fit in INLA the age-specific spatio-tempo
 
 
 # Data
-Female breast cancer mortality data (ICD-10 code 50) in Spanish provinces during the period 1985-2010 by age groups.
+Simulated female breast cancer mortality data (ICD-10 code 50) in Spanish provinces during the period 1985-2010 by age groups.
 
 - [**BreastCancer_ESP.txt**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/BreastCancer_ESP.txt)
   
@@ -21,6 +21,8 @@ Female breast cancer mortality data (ICD-10 code 50) in Spanish provinces during
 	- **_Year_**: numeric vector of year's identifiers.
 	- **_Obs_**: observed number of deaths.
 	- **_Pop_**: Population at risk.
+	
+	Note that the observed number of deaths have been slightly altered in order to preserve data privacy. 
 
 - [**Carto_ESP.Rdata**](https://github.com/spatialstatisticsupna/Flexible_Psplines_article/blob/master/data/Carto_ESP.Rdata) `SpatialPolygonsDataFrame` object containing the spatial polygons of the Spanish provinces.
   

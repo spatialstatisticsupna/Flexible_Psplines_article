@@ -5,9 +5,9 @@ library(maptools)
 library(RColorBrewer)
 
 
-##########################################################
-## Load the original data and its asociated cartography ##
-##########################################################
+#################################################
+## Load the data and its asociated cartography ##
+#################################################
 load("../data/Carto_ESP.Rdata")
 plot(Carto_ESP, axes=TRUE)
 
@@ -20,66 +20,6 @@ A <- length(unique(Data$Age.group))
 
 t.from <- min(Data$Year)
 t.to <- max(Data$Year)
-
-
-####################################################################################################################
-## Table 1: Breast cancer deaths and crude rates (by 100,000 female inhabitants) by age-group, province, and year ##
-####################################################################################################################
-Rate.A <- aggregate(Data[,c("Obs","Pop")], by=list(Age.group=Data$Age.group), sum)
-Rate.A$Age.group <- unique(Data$Age.group)
-Rate.A$crude.rate <- round(Rate.A$Obs/Rate.A$Pop*100000,3)
-print(Rate.A[,-3])
-
-Rate.S <- aggregate(Data[,c("Obs","Pop")], by=list(Province=Data$Province), sum)
-Rate.S$Province <- as.character(Carto_ESP$NAME[-(S+1)])
-Rate.S$crude.rate <- round(Rate.S$Obs/Rate.S$Pop*100000,3)
-Rate.S <- Rate.S[order(Rate.S$crude.rate),]
-print(Rate.S[c(1:5,NA,(S-4):S),-3])
-
-Rate.T <- aggregate(Data[,c("Obs","Pop")], by=list(Year=Data$Year), sum)
-Rate.T$Year <- seq(t.from,t.to)
-Rate.T$crude.rate <- round(Rate.T$Obs/Rate.T$Pop*100000,3)
-print(Rate.T[c(1:5,NA,(T-4):T),-3])
-
-
-################################################################################################################
-## Figure 1: Temporal evolution of Spanish age-specific crude rates by 100,000 females for the 11 age groups. ##
-##           On the left, the youngest age groups, and on the right the oldest age groups.                    ##
-################################################################################################################
-Rate.AT <- array(0,dim=c(T,A))
-colnames(Rate.AT) <- unique(Data$Age.group)
-
-k=1
-for (i in unique(Data$Age.group)) {
-  data <- Data[Data$Age.group==i,]
-  
-  aux1 <- aggregate(data[,"Obs"], list(ano=data$Year), sum)
-  aux2 <- aggregate(data[,"Pop"], list(ano=data$Year), sum)
-  Rate.AT[,k] <- aux1$x/aux2$x*100000
-  k=k+1
-}	
-
-paleta <- c("#a6cee3","#b2df8a","#fb9a99","#fdbf6f","#ff7f00","#1f78b4","#33a02c","#e31a1c","#6a3d9a","#a6761d","#999999")
-par(mfrow=c(1,2), pty="s")
-
-plot(c(1,T), range(Rate.AT[,1:5]), type="n", xlab="", ylab="Crude rates (deaths/inhabitants x 100.000)", xaxt="n")
-axis(1, at=seq(1,T,5), labels=as.character(seq(t.from,t.to,5)), las=0)
-lines(1:T, Rate.AT[,1], lwd=2, col=paleta[1])
-lines(1:T, Rate.AT[,2], lwd=2, col=paleta[2])
-lines(1:T, Rate.AT[,3], lwd=2, col=paleta[3])
-lines(1:T, Rate.AT[,4], lwd=2, col=paleta[4])
-lines(1:T, Rate.AT[,5], lwd=2, col=paleta[5])
-legend("topright", legend=unique(Data$Age.label)[1:5], col=paleta[1:5], lwd=2)
-
-plot(c(1,T), range(Rate.AT[,6:11]), type="n", xlab="", ylab="Crude rates (deaths/inhabitants x 100.000)", xaxt="n")
-axis(1, at=seq(1,T,5), labels=as.character(seq(t.from,t.to,5)), las=0)
-lines(1:T, Rate.AT[,6], lwd=2, col=paleta[6])
-lines(1:T, Rate.AT[,7], lwd=2, col=paleta[7])
-lines(1:T, Rate.AT[,8], lwd=2, col=paleta[8])
-lines(1:T, Rate.AT[,9], lwd=2, col=paleta[9])
-lines(1:T, Rate.AT[,10], lwd=2, col=paleta[10])
-lines(1:T, Rate.AT[,11], lwd=2, col=paleta[11])
-legend("topleft", legend=unique(Data$Age.label)[6:11], col=paleta[6:11], lwd=2)
 
 
 #############################################################################################################
