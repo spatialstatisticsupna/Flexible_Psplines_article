@@ -10,6 +10,8 @@ rm(list=ls())
 library(INLA)
 library(splines)
 
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+
 
 ###################################################
 ##  1. Read the data to be analyzed  		         ##

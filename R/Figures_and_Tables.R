@@ -1,18 +1,23 @@
 rm(list=ls())
 library(INLA)
-library(sp)
-library(maptools)
 library(RColorBrewer)
+library(sf)
+library(tmap)
+
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 
 
 #################################################
 ## Load the data and its asociated cartography ##
 #################################################
 load("../data/Carto_ESP.Rdata")
-plot(Carto_ESP, axes=TRUE)
+
+head(Carto_ESP)
+plot(Carto_ESP$geometry, axes=TRUE)
 
 Data <- read.table("../data/BreastCancer_ESP.txt", header=TRUE)
 Data <- Data[order(Data$Prov,Data$Year,Data$Age.group), ] 
+str(Data)
 
 T <- length(unique(Data$Year))
 S <- length(unique(Data$Province))
@@ -22,11 +27,11 @@ t.from <- min(Data$Year)
 t.to <- max(Data$Year)
 
 
-#############################################################################################################
-## Load the final model fitted with INLA: Model9-SI (with posterior patterns), which can be download from: ##
-##  - https://emi-sstcdapp.unavarra.es/Flexible_Psplines_article/Model9_SI.Rdata                           ##
-#############################################################################################################
-load("Model9_SI.Rdata")
+############################################################################################
+## Load the final model fitted with INLA: Model9-SI (with posterior patterns),            ##
+## which can be download from: https://emi-sstcdapp.unavarra.es/Flexible_Psplines_article ##
+############################################################################################
+load(url("https://emi-sstcdapp.unavarra.es/Flexible_Psplines_article/Model9_SI.Rdata"))
 
 Model <- M9.SI
 summary(Model)
@@ -38,12 +43,21 @@ summary(Model)
 ##           and posterior mean of the age pattern (with 95% credible bands) common to all years and provinces (right).    ##
 #############################################################################################################################
 
-## Spatial pattern ##
-zeta <- unlist(lapply(Model$marginals.lincomb.derived[2:(S+1)], function(x) inla.emarginal(exp,x)))
-Carto_ESP$zeta <- c(zeta,NA)
 
-spplot(Carto_ESP, "zeta", names.attr="", at=c(0.7,0.8,0.9,1,1.1,1.2,1.3),
-             col.regions=brewer.pal(6,"YlOrRd"), main=list(label="Spatial pattern", cex=1.5))
+## Spatial pattern ##
+Carto_ESP$zeta <- c(unlist(lapply(Model$marginals.lincomb.derived[2:(S+1)], function(x) inla.emarginal(exp,x))), NA)
+
+paleta <- brewer.pal(6,"YlOrRd")
+values <- c(0.7,0.8,0.9,1,1.1,1.2,1.3)
+
+Map.fig1 <- tm_shape(Carto_ESP) +
+  tm_polygons(col="zeta", title="", palette=paleta,
+              colorNA=NULL, showNA=FALSE,
+              legend.show=T, legend.reverse=T,
+              style="fixed", breaks=values, interval.closure="left") + 
+  tm_layout(main.title="Spatial pattern", main.title.position=0.2,
+            legend.outside=T, legend.outside.position="right", legend.frame=F)
+print(Map.fig1)
 
 
 ## Temporal pattern ##
@@ -88,14 +102,24 @@ risk.matrix <- rbind(matrix(delta,S,A,byrow=T), rep(NA,A))
 
 risk.data.frame <- data.frame(Carto_ESP$NAME,risk.matrix)
 colnames(risk.data.frame) <- c("NAME",paste("Age",seq(1,A),sep=""))
-attr(Carto_ESP, "data") <- data.frame(attr(Carto_ESP,"data"), risk.data.frame)
+
+carto <- merge(Carto_ESP,risk.data.frame)
 
 paleta <- brewer.pal(8,"YlOrRd")
-colorkeypval <- list(labels=c("0.79","0.84","0.89","0.94","1.00","1.06","1.12","1.19","1.26"),at=(0:8)/8)
+values <- c(0.79,0.84,0.89,0.94,1.00,1.06,1.12,1.19,1.26)
 
-spplot(obj=Carto_ESP, zcol=paste("Age",seq(1,A),sep=""), col.regions=paleta, main="Area-age interaction",
-       names.attr=unique(Data$Age.label), axes=TRUE, at=round(exp(seq(-0.23,0.23,length.out=9)),3),
-       as.table=TRUE, layout=c(3,4), colorkey=colorkeypval)
+Map.fig4 <- tm_shape(carto) +
+  tm_polygons(col=paste("Age",seq(1,A),sep=""), title="",
+              colorNA=NULL, showNA=FALSE,
+              palette=paleta, legend.show=T, legend.reverse=T,
+              style="fixed", breaks=values, interval.closure="left") + 
+  tm_layout(main.title="Area-age interaction", main.title.position=0.2, panel.label.size=1.5,
+            legend.outside=T, legend.outside.position="right", legend.frame=F,
+            panel.labels=unique(Data$Age.label),
+            legend.outside.size=0.3, outer.margins=c(0.0,0.03,0.01,0)) + 
+  tm_facets(nrow=4, ncol=3)
+
+print(Map.fig4)
 
 
 ########################################################################################################
@@ -179,16 +203,27 @@ i <- 3 ## Age-group [45-50)
 
 risk.matrix <- rbind(risk.M9[i,,],rep(NA,T))
 risk.data.frame <- data.frame(Carto_ESP$NAME,risk.matrix)
-
 colnames(risk.data.frame)<- c("NAME",paste("Year",seq(1,T),sep=""))
-attr(Carto_ESP, "data") = data.frame(attr(Carto_ESP,"data"), risk.data.frame)
+
+carto <- merge(Carto_ESP,risk.data.frame)
+
 
 Obs.est <- (Data$fitted.values/Data$Pop)[Data$Age.group==i]
 rate.age2 <- apply(matrix(Data$Obs[Data$Age.group==i],nrow=S,ncol=T),2,mean)/apply(matrix(Data$Pop[Data$Age.group==i],nrow=S,ncol=T),2,mean)*100000
 
 paleta <- brewer.pal(8,"RdBu")[8:1]
 values <- c(round(c(mean(rate.age2)/2,mean(rate.age2)/1.75,mean(rate.age2)/1.5,mean(rate.age2)/1.25, mean(rate.age2),mean(rate.age2)*1.25,mean(rate.age2)*1.5,mean(rate.age2)*1.75,mean(rate.age2)*2)))
-colorkeypval <- list(labels=list(at=values))
 
-spplot(obj=Carto_ESP, zcol=paste("Year",seq(1,T),sep=""), col.regions=paleta, main=paste("Age-group",unique(Data$Age.label)[i]),
-       names.attr=as.character(seq(t.from,t.to)), axes=TRUE, layout=c(7,4), at=values, as.table=TRUE, colorkey=colorkeypval)
+Map.fig7 <- tm_shape(carto) +
+  tm_polygons(col=paste("Year",seq(1,T),sep=""), title="",
+              colorNA=NULL, showNA=FALSE,
+              palette=paleta, legend.show=T, legend.reverse=T,
+              style="fixed", breaks=values, interval.closure="left") + 
+  tm_layout(main.title=paste("Age-group",unique(Data$Age.label)[i]),
+            main.title.position="center", panel.label.size=1.5,
+            legend.outside=T, legend.outside.position="right", legend.frame=F,
+            panel.labels=as.character(seq(t.from,t.to)),
+            legend.outside.size=0.3, outer.margins=c(0.0,0.03,0.01,0)) + 
+  tm_facets(nrow=4, ncol=7)
+
+print(Map.fig7)
